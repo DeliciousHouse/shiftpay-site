@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ShiftPay support</title>
+<meta name="description" content="Help with ShiftPay: getting started, estimates, overtime, breaks, restoring Pro, reminders, calendar export, widgets, iCloud, exports, deleting data, and reporting a problem.">
+<style>
+:root {
+  color-scheme: light dark;
+  --bg: #fbfaf7;
+  --surface: #ffffff;
+  --text: #1c1d1f;
+  --muted: #50555b;
+  --accent: #0a58a6;
+  --accent-hover: #073f78;
+  --border: #dcd8cf;
+  --note-bg: #f2f0ea;
+  --focus: #b3410e;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #121417;
+    --surface: #1a1d21;
+    --text: #eceef0;
+    --muted: #b0b5bb;
+    --accent: #8bbcff;
+    --accent-hover: #b5d4ff;
+    --border: #30353b;
+    --note-bg: #1f2328;
+    --focus: #ffb37a;
+  }
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  overflow-wrap: break-word;
+}
+.wrap { max-width: 44rem; margin: 0 auto; padding: 0 1rem; }
+.skip-link { position: absolute; left: -999px; top: 0; padding: .5rem .75rem; background: var(--surface); color: var(--accent); border: 2px solid var(--focus); border-radius: .375rem; z-index: 10; }
+.skip-link:focus { left: 1rem; top: 1rem; }
+header.site { border-bottom: 1px solid var(--border); background: var(--surface); }
+header.site .wrap { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .25rem 1.5rem; padding-top: .9rem; padding-bottom: .9rem; }
+.brand { font-weight: 700; font-size: 1.15rem; color: var(--text); text-decoration: none; letter-spacing: -.01em; }
+header.site nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .25rem 0; }
+header.site nav li { margin: 0; }
+header.site nav li + li::before { content: "·"; color: var(--muted); padding: 0 .55rem; }
+header.site nav a { color: var(--accent); text-decoration: none; }
+header.site nav a:hover { text-decoration: underline; }
+header.site nav a[aria-current="page"] { color: var(--text); font-weight: 600; }
+@media (max-width: 30rem) { header.site nav ul { gap: .25rem 1rem; } header.site nav li + li::before { content: none; } }
+main.wrap { padding-top: 2rem; padding-bottom: 3rem; }
+h1, h2, h3 { line-height: 1.25; letter-spacing: -.01em; }
+h1 { font-size: 2rem; margin: 0 0 .5rem; }
+h2 { font-size: 1.35rem; margin: 2.25rem 0 .6rem; padding-top: .25rem; }
+h3 { font-size: 1.1rem; margin: 1.5rem 0 .4rem; }
+p, ul, ol, dl { margin: 0 0 1rem; }
+ul, ol { padding-left: 1.4rem; }
+li { margin-bottom: .45rem; }
+a { color: var(--accent); text-underline-offset: .15em; }
+a:hover { color: var(--accent-hover); }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; border-radius: 2px; }
+.lede { font-size: 1.15rem; color: var(--muted); }
+.meta { color: var(--muted); margin-bottom: 1.5rem; }
+.note { background: var(--note-bg); border-left: 4px solid var(--accent); padding: .85rem 1rem; border-radius: 0 .375rem .375rem 0; }
+.formula { background: var(--note-bg); border: 1px solid var(--border); border-radius: .5rem; padding: .9rem 1rem; margin: 0 0 1rem; }
+.formula p { margin: 0 0 .35rem; }
+.formula p:last-child { margin-bottom: 0; }
+.cards { list-style: none; padding: 0; display: grid; gap: .9rem; }
+.cards li { margin: 0; background: var(--surface); border: 1px solid var(--border); border-radius: .6rem; padding: 1rem 1.1rem; }
+.cards a { font-weight: 600; font-size: 1.1rem; }
+.cards p { margin: .25rem 0 0; color: var(--muted); }
+.toc { background: var(--surface); border: 1px solid var(--border); border-radius: .6rem; padding: .9rem 1.1rem .4rem; margin-bottom: 1.5rem; }
+.toc h2 { font-size: 1rem; margin: 0 0 .4rem; padding: 0; }
+.toc ul { margin-bottom: .5rem; }
+.toc li { margin-bottom: .25rem; }
+dl.facts { display: grid; grid-template-columns: max-content 1fr; gap: .35rem 1rem; }
+dl.facts dt { font-weight: 600; }
+dl.facts dd { margin: 0; overflow-wrap: anywhere; }
+@media (max-width: 30rem) { dl.facts { grid-template-columns: 1fr; } dl.facts dd { margin-bottom: .5rem; } }
+footer.site { border-top: 1px solid var(--border); color: var(--muted); font-size: .95rem; }
+footer.site .wrap { padding-top: 1.25rem; padding-bottom: 2rem; }
+footer.site p { margin: 0; }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="../">ShiftPay</a>
+    <nav aria-label="Site">
+      <ul>
+        <li><a href="../">Home</a></li>
+        <li><a href="./" aria-current="page">Support</a></li>
+        <li><a href="../privacy/">Privacy</a></li>
+        <li><a href="../pay-calculations/">How pay is calculated</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+<main id="main" class="wrap">
+  <h1>ShiftPay support</h1>
+  <p class="lede">Answers to common questions about ShiftPay. To contact support, email <a href="mailto:bkam@deliciouswines.org">bkam@deliciouswines.org</a> and include the details listed under <a href="#reporting-a-problem">Reporting a problem</a>.</p>
+
+  <h2 id="getting-started">Getting started</h2>
+  <p>Create a job with your usual hourly rate, currency, break duration, and pay frequency. Then add a shift or choose a repeating schedule. Open Today to see your upcoming work and current-week estimate. You can change your job settings later.</p>
+
+  <h2 id="paycheck-differs">Why is my paycheck different from the estimate?</h2>
+  <p>ShiftPay uses the hours and rules you enter. Check the period dates, actual start/end times, unpaid breaks, rate overrides, overtime threshold, and premium eligibility. Your employer may use a different workweek boundary or rounding method. Withholding, benefits, tips, reimbursements, bonuses, corrections, and other deductions may not be represented. The difference alone does not show wrongdoing.</p>
+
+  <h2 id="overtime-defaults">Are the overtime defaults the law where I live?</h2>
+  <p>No. They are configurable examples. Enter the rules that apply to your work. ShiftPay is not legal, payroll, or tax advice. Ask your payroll contact when a policy is unclear.</p>
+
+  <h2 id="overnight-dst">How are overnight shifts and daylight saving handled?</h2>
+  <p>The end date can be after the start date. Pay uses real elapsed time, so a clock change can make an overnight shift shorter or longer. Rotations follow local calendar days and the configured start time. Verify the displayed time zone when traveling or entering past work.</p>
+
+  <h2 id="breaks">Where are breaks placed in the calculation?</h2>
+  <p>When only a total unpaid-break duration is entered, the calculation subtracts it from the end of the effective shift. That can affect a premium or overtime boundary. If your break occurred at a different time and that changes pay, divide the work into the relevant paid intervals. The shift editor explains break allocation. Detailed calculation conventions are explained in <a href="../pay-calculations/">How ShiftPay calculates pay</a>.</p>
+
+  <h2 id="actual-hours">How do I record actual hours?</h2>
+  <p>Open the shift and enter actual clock-in, clock-out, and unpaid-break values. Scheduled values remain available. A completed shift uses actual values where supplied; a planned shift remains a projection. Check that clock-out follows clock-in before saving.</p>
+
+  <h2 id="rate-changes">Does changing the hourly rate change old estimates?</h2>
+  <p>When you change a job’s rate, pay rules, currency, or time zone, ShiftPay saves the previous configuration for earlier shifts. Explicit shift overrides still take precedence. A shift uses the configuration at its effective start, including an overnight shift crossing the change. Review or override that occurrence if your employer uses another convention. Future occurrences use the new configuration.</p>
+
+  <h2 id="currencies">Can I use different currencies?</h2>
+  <p>Each job has its own currency. Totals across different currencies are kept separate; ShiftPay does not invent an exchange rate.</p>
+
+  <h2 id="restore-pro">How do I restore Pro?</h2>
+  <ol>
+    <li>Sign in to the App Store with the Apple Account used to purchase ShiftPay Pro.</li>
+    <li>Open ShiftPay Settings and choose Restore Purchases.</li>
+    <li>Complete any Apple authentication prompt and wait for confirmation.</li>
+  </ol>
+  <p>Pro is a one-time purchase. A temporary App Store connection failure does not delete work records. A refunded or revoked transaction no longer grants Pro. If no purchase is found, check the account’s purchase history before contacting support. Do not purchase again merely to troubleshoot restoration.</p>
+
+  <h2 id="reminders">Why are reminders missing?</h2>
+  <p>Check notification permission in iOS Settings, Focus settings, and notification preview options. Reopen ShiftPay after changing schedules so upcoming reminders can refresh. Notifications are conveniences and are not a guaranteed alarm or emergency alert.</p>
+
+  <h2 id="calendar-export">Why is calendar export unavailable?</h2>
+  <p>Calendar access is optional. Enable it when choosing export. ShiftPay creates a dedicated calendar in an available writable calendar account. If you denied access, change the permission in iOS Settings. ShiftPay does not need calendar permission for its own schedule. Exported calendar events are separate copies; edits in another calendar app do not automatically become ShiftPay edits.</p>
+
+  <h2 id="widgets">Why are widgets stale?</h2>
+  <p>iOS controls widget refresh timing. Open ShiftPay to refresh the shared snapshot. Confirm Pro is restored and that the widget belongs to the installed version of the app.</p>
+
+  <h2 id="icloud">Why is iCloud unavailable?</h2>
+  <p>Check your Apple Account, iCloud storage, and connectivity. Continue using the app locally. A sync status message is not a guarantee that another device already has every edit. Before reinstalling or troubleshooting, choose Settings → Create private backup and keep the file somewhere you control. Do not delete a database to fix synchronization.</p>
+
+  <h2 id="export">How do I export my information?</h2>
+  <p>In Settings, choose Export shifts as CSV or Export earnings as CSV; in Earnings, choose Share earnings report. These Pro features use the system share sheet so you choose the destination. CSVs contain job names, time or period data, and compensation; private backups can also include notes and work locations. Shared files are no longer controlled by ShiftPay. Verify locale and currency columns when opening CSVs in a spreadsheet. Settings → Create private backup is available without Pro, and Import ShiftPay backup merges valid saved records without replacing newer edits. Importing additional jobs or advanced rotations may require Pro; a rejected import leaves existing records intact. After restoring a backup, re-enable Require device unlock in Settings on this device if desired.</p>
+
+  <h2 id="delete-data">How do I delete my data?</h2>
+  <p>Use Settings → Delete all my data and confirm, or delete individual records in the app. Remove exported copies separately and manage any private iCloud copy in Apple’s iCloud storage settings. Uninstalling removes the local app container but does not guarantee deletion of cloud data, backups, exported calendars, or purchase history. See the <a href="../privacy/">privacy policy</a>.</p>
+
+  <h2 id="unreadable-data">What if saved data cannot be read?</h2>
+  <p>Stop editing the affected record, preserve a backup, and <a href="mailto:bkam@deliciouswines.org">contact support</a> with the app version, iOS version, and error text. Do not include confidential compensation or notes unless needed. ShiftPay does not erase saved data as an automatic recovery step.</p>
+
+  <h2 id="reporting-a-problem">Reporting a problem</h2>
+  <p>Email <a href="mailto:bkam@deliciouswines.org">bkam@deliciouswines.org</a>. Include the app version/build shown in Settings, iPhone model, iOS version, steps to reproduce, and whether the problem affects planned or actual hours. For a calculation issue, a fictional minimal example with shift times, rate, break, and rule configuration is usually enough. Redact personal information from screenshots. Do not send Apple passwords, payment information, or authentication codes.</p>
+</main>
+<footer class="site">
+  <div class="wrap">
+    <p>© 2026 Delicious Wines Crew LLC · Contact: <a href="mailto:bkam@deliciouswines.org">bkam@deliciouswines.org</a></p>
+  </div>
+</footer>
+</body>
+</html>

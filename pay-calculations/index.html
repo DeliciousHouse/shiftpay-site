@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How ShiftPay calculates pay</title>
+<meta name="description" content="The conventions ShiftPay uses for breaks, elapsed time and daylight saving, overtime, differentials, rate changes, rounding, currencies, pay periods, paydays, take-home estimates, and rotations.">
+<style>
+:root {
+  color-scheme: light dark;
+  --bg: #fbfaf7;
+  --surface: #ffffff;
+  --text: #1c1d1f;
+  --muted: #50555b;
+  --accent: #0a58a6;
+  --accent-hover: #073f78;
+  --border: #dcd8cf;
+  --note-bg: #f2f0ea;
+  --focus: #b3410e;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #121417;
+    --surface: #1a1d21;
+    --text: #eceef0;
+    --muted: #b0b5bb;
+    --accent: #8bbcff;
+    --accent-hover: #b5d4ff;
+    --border: #30353b;
+    --note-bg: #1f2328;
+    --focus: #ffb37a;
+  }
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  overflow-wrap: break-word;
+}
+.wrap { max-width: 44rem; margin: 0 auto; padding: 0 1rem; }
+.skip-link { position: absolute; left: -999px; top: 0; padding: .5rem .75rem; background: var(--surface); color: var(--accent); border: 2px solid var(--focus); border-radius: .375rem; z-index: 10; }
+.skip-link:focus { left: 1rem; top: 1rem; }
+header.site { border-bottom: 1px solid var(--border); background: var(--surface); }
+header.site .wrap { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .25rem 1.5rem; padding-top: .9rem; padding-bottom: .9rem; }
+.brand { font-weight: 700; font-size: 1.15rem; color: var(--text); text-decoration: none; letter-spacing: -.01em; }
+header.site nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .25rem 0; }
+header.site nav li { margin: 0; }
+header.site nav li + li::before { content: "·"; color: var(--muted); padding: 0 .55rem; }
+header.site nav a { color: var(--accent); text-decoration: none; }
+header.site nav a:hover { text-decoration: underline; }
+header.site nav a[aria-current="page"] { color: var(--text); font-weight: 600; }
+@media (max-width: 30rem) { header.site nav ul { gap: .25rem 1rem; } header.site nav li + li::before { content: none; } }
+main.wrap { padding-top: 2rem; padding-bottom: 3rem; }
+h1, h2, h3 { line-height: 1.25; letter-spacing: -.01em; }
+h1 { font-size: 2rem; margin: 0 0 .5rem; }
+h2 { font-size: 1.35rem; margin: 2.25rem 0 .6rem; padding-top: .25rem; }
+h3 { font-size: 1.1rem; margin: 1.5rem 0 .4rem; }
+p, ul, ol, dl { margin: 0 0 1rem; }
+ul, ol { padding-left: 1.4rem; }
+li { margin-bottom: .45rem; }
+a { color: var(--accent); text-underline-offset: .15em; }
+a:hover { color: var(--accent-hover); }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; border-radius: 2px; }
+.lede { font-size: 1.15rem; color: var(--muted); }
+.meta { color: var(--muted); margin-bottom: 1.5rem; }
+.note { background: var(--note-bg); border-left: 4px solid var(--accent); padding: .85rem 1rem; border-radius: 0 .375rem .375rem 0; }
+.formula { background: var(--note-bg); border: 1px solid var(--border); border-radius: .5rem; padding: .9rem 1rem; margin: 0 0 1rem; }
+.formula p { margin: 0 0 .35rem; }
+.formula p:last-child { margin-bottom: 0; }
+.cards { list-style: none; padding: 0; display: grid; gap: .9rem; }
+.cards li { margin: 0; background: var(--surface); border: 1px solid var(--border); border-radius: .6rem; padding: 1rem 1.1rem; }
+.cards a { font-weight: 600; font-size: 1.1rem; }
+.cards p { margin: .25rem 0 0; color: var(--muted); }
+.toc { background: var(--surface); border: 1px solid var(--border); border-radius: .6rem; padding: .9rem 1.1rem .4rem; margin-bottom: 1.5rem; }
+.toc h2 { font-size: 1rem; margin: 0 0 .4rem; padding: 0; }
+.toc ul { margin-bottom: .5rem; }
+.toc li { margin-bottom: .25rem; }
+dl.facts { display: grid; grid-template-columns: max-content 1fr; gap: .35rem 1rem; }
+dl.facts dt { font-weight: 600; }
+dl.facts dd { margin: 0; overflow-wrap: anywhere; }
+@media (max-width: 30rem) { dl.facts { grid-template-columns: 1fr; } dl.facts dd { margin-bottom: .5rem; } }
+footer.site { border-top: 1px solid var(--border); color: var(--muted); font-size: .95rem; }
+footer.site .wrap { padding-top: 1.25rem; padding-bottom: 2rem; }
+footer.site p { margin: 0; }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="../">ShiftPay</a>
+    <nav aria-label="Site">
+      <ul>
+        <li><a href="../">Home</a></li>
+        <li><a href="../support/">Support</a></li>
+        <li><a href="../privacy/">Privacy</a></li>
+        <li><a href="./" aria-current="page">How pay is calculated</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+<main id="main" class="wrap">
+  <h1>How ShiftPay calculates pay</h1>
+  <p class="lede">ShiftPay shows gross-pay estimates based on the jobs, shifts, and rules you configure. They are estimates, not payroll, legal, or tax advice, and no jurisdiction’s rules are silently applied.</p>
+  <p>This page explains the conventions behind those estimates so you can compare them with your employer’s policies. Ask your payroll contact when a policy is unclear.</p>
+
+  <nav class="toc" aria-labelledby="toc-heading">
+    <h2 id="toc-heading">On this page</h2>
+    <ul>
+      <li><a href="#time-and-breaks">Shift times, breaks, and actual hours</a></li>
+      <li><a href="#overtime">Overtime and double time</a></li>
+      <li><a href="#differentials">Differentials and how pay is combined</a></li>
+      <li><a href="#rate-changes">Rate changes and earlier shifts</a></li>
+      <li><a href="#rounding">Rounding, reports, and currencies</a></li>
+      <li><a href="#pay-periods">Pay periods, paydays, and take-home</a></li>
+      <li><a href="#rotations">Rotating schedules</a></li>
+    </ul>
+  </nav>
+
+  <h2 id="time-and-breaks">Shift times, breaks, and actual hours</h2>
+  <ul>
+    <li>Each shift has scheduled start and end times and, optionally, separate actual clock-in and clock-out times. Estimates use actual times when they are present, without changing your schedule. If you enter only one actual time, ShiftPay uses the scheduled time for the other and shows a warning. Actual-hour totals require both actual times.</li>
+    <li>Paid time is real elapsed time, measured to the millisecond. An eight-hour shift by the wall clock that crosses the spring daylight-saving change can contain seven paid hours; across the fall change it can contain nine. No imaginary hours are added or removed.</li>
+    <li><strong>Unpaid breaks are subtracted from the end of the effective shift.</strong> ShiftPay records how long a break lasted, not exactly when it happened, so it uses this fixed convention. It affects differential pay and how hours are split at midnight. If your employer places breaks differently, compare ShiftPay’s estimates with your actual payroll. Paid breaks need no deduction.</li>
+    <li>Rotation shift lengths follow your local wall clock. A 19:00–07:00 rotation keeps those local clock times across daylight-saving changes. When a clock time occurs twice, the first occurrence is used; when a time doesn’t exist because the clocks jump forward, it moves later while keeping its minutes. Pay still uses the actual elapsed time.</li>
+    <li>Shifts longer than 24 hours are supported and are split across dates.</li>
+    <li>Some entries are left out of estimates and shown with a warning: shifts with a negative duration, a negative or excessive break, a missing job, or an invalid hourly rate, and shifts longer than 366 elapsed days. Cancelled shifts are also left out.</li>
+    <li>A shift record that appears more than once is counted only once, with a warning. Overlapping shifts for the same job are both counted and flagged for your review; ShiftPay never silently assumes that legitimate on-call or simultaneous entries are duplicates.</li>
+  </ul>
+
+  <h2 id="overtime">Overtime and double time</h2>
+  <p>Overtime rules belong to each job, and jobs never share overtime counters. Each job’s configured time zone and workweek starting day determine its daily and weekly boundaries, regardless of where your phone currently is.</p>
+  <p>ShiftPay works through your hours in this order:</p>
+  <ol>
+    <li>Each shift is split at local midnight, differential boundaries, daylight-saving transitions, and report boundaries.</li>
+    <li>The pieces are processed in time order, then split again wherever a daily or weekly overtime or double-time threshold is reached.</li>
+    <li>All overtime-eligible paid hours count toward that job’s daily and weekly thresholds, including hours already paid at an overtime rate. Hours that are not eligible for overtime neither receive overtime nor count toward its thresholds.</li>
+    <li>The highest tier reached applies. Daily and weekly overtime never multiply together. Double time always pays at least the overtime multiplier, so a mistaken double-time setting can’t reduce pay.</li>
+    <li>By default, overtime is 1.5 times the base rate after 40 hours per workweek. Daily overtime and double time are off until you configure them. A threshold counts as reached at exactly its value: a threshold of zero makes every eligible hour overtime, and a shift ending exactly at a threshold has no hours beyond it.</li>
+  </ol>
+  <p class="note">This overtime approach and its defaults are a documented, configurable convention, <strong>not</strong> a universal labor-law implementation. Enter the rules that apply to your work. Some contracts exclude daily overtime from weekly totals or use other regular-rate calculations; ShiftPay does not apply those conventions automatically.</p>
+
+  <h2 id="differentials">Differentials and how pay is combined</h2>
+  <p>A shift’s rate override, when set, replaces its job’s base rate. Fixed hourly premiums and percentage premiums are calculated independently, then added. Percentages are percentage points: 10 means 10% of the base rate.</p>
+  <p>With the default setting (Overtime applies to: Base rate only), pay is combined like this:</p>
+  <div class="formula">
+    <p><strong>Base pay</strong> = hours × the shift’s base rate × the overtime multiplier that applies</p>
+    <p><strong>Premium pay</strong> = hours × (the total of fixed hourly premiums + the base rate × the total of percentage premiums ÷ 100)</p>
+    <p><strong>Gross pay</strong> = base pay + premium pay</p>
+  </div>
+  <p>Percentage premiums do not compound with each other. By default, fixed and percentage premiums do not receive overtime multipliers. If you set Overtime applies to: Base + differentials, premium pay is also multiplied by the overtime multiplier that applies.</p>
+  <p>A differential can match calendar weekdays, a local clock window (including overnight windows), and shift modifiers, where a shift with any one of the selected modifiers qualifies. All configured criteria must match. Weekday checks apply to each worked portion of a shift, not just the day it starts. Holiday premiums require a holiday modifier to be configured; ShiftPay does not assume any holiday calendar. Differential overrides on a shift replace the job’s list, and an empty override list means no premiums for that shift.</p>
+
+  <h2 id="rate-changes">Rate changes and earlier shifts</h2>
+  <p>When you change a job’s base rate, pay rules, currency, or time zone, ShiftPay saves the previous configuration so earlier shifts keep using it. The moment you save the change, as shown by your device clock, becomes the cutoff. Future shifts use the new configuration.</p>
+  <ul>
+    <li>A shift uses the configuration in effect at its effective start for the entire shift, including an overnight shift that spans the change. Edit that occurrence if your employer uses another convention.</li>
+    <li>Explicit rate and differential overrides on a shift always take precedence.</li>
+    <li>Saving several times at the same cutoff keeps the original earlier configuration rather than recording intermediate rates.</li>
+    <li>If the device clock moved backward between two saves, the second save records nothing new, and earlier shifts keep the original configuration. If a change was saved while the device clock was set ahead, the true change time can’t be recovered, so affected shifts may need explicit overrides.</li>
+    <li>Older or imported records can already contain several saved configurations for the same job and cutoff. Those records don’t show the order in which they were saved, so the original earlier configuration can’t be reliably reconstructed. ShiftPay resolves them in a consistent order, but it doesn’t claim that order is the save order or invent recovered history. Estimates based on such history may need explicit shift overrides checked against your own records.</li>
+    <li>Opening the shift editor never turns historical values into overrides; editing keeps your original override choices. Moving or duplicating a shift looks up its configuration again using its new date and job. Duplicating a shift to the next day keeps its local clock time across daylight-saving changes.</li>
+    <li>Saved earlier configurations are handled like your other records for backups, deletion, and private iCloud synchronization.</li>
+  </ul>
+
+  <h2 id="rounding">Rounding, reports, and currencies</h2>
+  <ul>
+    <li>Rates, multipliers, hours, and money are calculated with decimal arithmetic. Elapsed time is converted to whole milliseconds before any money is calculated.</li>
+    <li>ShiftPay adds up unrounded values, then rounds each shift’s regular, overtime, and differential amounts once, rounding halves up, to the currency’s smallest unit. For example, Japanese yen (JPY) uses zero decimal places and Kuwaiti dinar (KWD) uses three. Total gross pay is the sum of those rounded amounts.</li>
+    <li>Regular pay is the full pay for regular hours. Overtime pay includes the full base pay for overtime and double-time hours, not just the extra. The overtime premium is only the extra above straight base pay. Differential pay is kept separate.</li>
+    <li>Report periods include their start and exclude their end. A shift that crosses midnight contributes the matching worked portions to each period.</li>
+    <li>Amounts are rounded within each report, so separately rounded daily reports may differ by a cent from a report for the whole period. Payroll systems also vary in how they round.</li>
+    <li>Earnings are totaled by currency. Different currencies are never added together; totals in each currency are kept separate, and there is no implied exchange rate.</li>
+  </ul>
+
+  <h2 id="pay-periods">Pay periods, paydays, and take-home</h2>
+  <ul>
+    <li>Weekly and biweekly periods run seven or fourteen calendar days from the local period-start date you configure. Dates before that start date are handled correctly too.</li>
+    <li>Monthly periods run from the first day of the month, in local time, up to but not including the first day of the next month.</li>
+    <li>Semimonthly periods use two configurable start days; the defaults are the 1st and the 16th. An invalid pair falls back to the 1st and 16th. A day beyond the end of a month uses that month’s last day, and the first start day can be no later than the 27th so February still has two distinct periods.</li>
+    <li>Semimonthly paydays are configured separately; the defaults are the 15th and the 31st. A payday earlier than the last day included in its period moves into the next month. Day 31 means the last day in shorter months.</li>
+    <li>For other pay frequencies, payday is the day after the period ends plus the number of days you configure (zero or more). Paydays do not move automatically for weekends or bank holidays.</li>
+    <li>Your next paycheck includes earlier pay periods whose payday hasn’t arrived yet, so a delay between a period’s end and its payday doesn’t skip your next paycheck.</li>
+    <li><strong>Optional take-home estimate:</strong> take-home = gross pay × (1 − your estimated withholding percentage ÷ 100) − your deduction per paycheck, never less than zero, rounded to the currency’s precision. It is not a tax calculation.</li>
+  </ul>
+
+  <h2 id="rotations">Rotating schedules</h2>
+  <ul>
+    <li>A rotation is an ordered cycle of days of any length. Its anchor date (Cycle day 1) sets where the cycle falls, including for dates before the anchor. The anchor alone never limits when a schedule is active.</li>
+    <li>Templates include Fixed weekdays, 4 on / 4 off, 2–2–3, Pitman, DuPont, Alternating weeks, Custom rotation, and manual schedules. Pitman and 2–2–3 share a 14-day on/off sequence, and you can customize which days are day or night shifts. DuPont uses a 28-day sequence that mixes day and night shifts.</li>
+    <li>Rotations follow local calendar days and the configured start time.</li>
+    <li>Shifts are generated from a schedule only for the dates being viewed or calculated. Changing one occurrence affects only that occurrence, and removing it cancels just that occurrence. A moved occurrence can appear in a date range outside its original scheduled date.</li>
+    <li>When you change a schedule for future shifts only, the old schedule ends before the date the change begins and the new schedule starts on that date, so earlier shifts aren’t duplicated.</li>
+    <li>Schedules are calculated for at most ten years at a time as a safeguard; normal views cover a month or a reporting period.</li>
+  </ul>
+
+  <p>For help comparing an estimate with a paycheck, see <a href="../support/">ShiftPay support</a> or email <a href="mailto:bkam@deliciouswines.org">bkam@deliciouswines.org</a>.</p>
+</main>
+<footer class="site">
+  <div class="wrap">
+    <p>© 2026 Delicious Wines Crew LLC · Contact: <a href="mailto:bkam@deliciouswines.org">bkam@deliciouswines.org</a></p>
+  </div>
+</footer>
+</body>
+</html>

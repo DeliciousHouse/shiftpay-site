@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ShiftPay privacy policy</title>
+<meta name="description" content="How the ShiftPay app handles your work information, optional iCloud synchronization, purchases, exports, support correspondence, and deletion.">
+<style>
+:root {
+  color-scheme: light dark;
+  --bg: #fbfaf7;
+  --surface: #ffffff;
+  --text: #1c1d1f;
+  --muted: #50555b;
+  --accent: #0a58a6;
+  --accent-hover: #073f78;
+  --border: #dcd8cf;
+  --note-bg: #f2f0ea;
+  --focus: #b3410e;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #121417;
+    --surface: #1a1d21;
+    --text: #eceef0;
+    --muted: #b0b5bb;
+    --accent: #8bbcff;
+    --accent-hover: #b5d4ff;
+    --border: #30353b;
+    --note-bg: #1f2328;
+    --focus: #ffb37a;
+  }
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  overflow-wrap: break-word;
+}
+.wrap { max-width: 44rem; margin: 0 auto; padding: 0 1rem; }
+.skip-link { position: absolute; left: -999px; top: 0; padding: .5rem .75rem; background: var(--surface); color: var(--accent); border: 2px solid var(--focus); border-radius: .375rem; z-index: 10; }
+.skip-link:focus { left: 1rem; top: 1rem; }
+header.site { border-bottom: 1px solid var(--border); background: var(--surface); }
+header.site .wrap { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .25rem 1.5rem; padding-top: .9rem; padding-bottom: .9rem; }
+.brand { font-weight: 700; font-size: 1.15rem; color: var(--text); text-decoration: none; letter-spacing: -.01em; }
+header.site nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .25rem 0; }
+header.site nav li { margin: 0; }
+header.site nav li + li::before { content: "·"; color: var(--muted); padding: 0 .55rem; }
+header.site nav a { color: var(--accent); text-decoration: none; }
+header.site nav a:hover { text-decoration: underline; }
+header.site nav a[aria-current="page"] { color: var(--text); font-weight: 600; }
+@media (max-width: 30rem) { header.site nav ul { gap: .25rem 1rem; } header.site nav li + li::before { content: none; } }
+main.wrap { padding-top: 2rem; padding-bottom: 3rem; }
+h1, h2, h3 { line-height: 1.25; letter-spacing: -.01em; }
+h1 { font-size: 2rem; margin: 0 0 .5rem; }
+h2 { font-size: 1.35rem; margin: 2.25rem 0 .6rem; padding-top: .25rem; }
+h3 { font-size: 1.1rem; margin: 1.5rem 0 .4rem; }
+p, ul, ol, dl { margin: 0 0 1rem; }
+ul, ol { padding-left: 1.4rem; }
+li { margin-bottom: .45rem; }
+a { color: var(--accent); text-underline-offset: .15em; }
+a:hover { color: var(--accent-hover); }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; border-radius: 2px; }
+.lede { font-size: 1.15rem; color: var(--muted); }
+.meta { color: var(--muted); margin-bottom: 1.5rem; }
+.note { background: var(--note-bg); border-left: 4px solid var(--accent); padding: .85rem 1rem; border-radius: 0 .375rem .375rem 0; }
+.formula { background: var(--note-bg); border: 1px solid var(--border); border-radius: .5rem; padding: .9rem 1rem; margin: 0 0 1rem; }
+.formula p { margin: 0 0 .35rem; }
+.formula p:last-child { margin-bottom: 0; }
+.cards { list-style: none; padding: 0; display: grid; gap: .9rem; }
+.cards li { margin: 0; background: var(--surface); border: 1px solid var(--border); border-radius: .6rem; padding: 1rem 1.1rem; }
+.cards a { font-weight: 600; font-size: 1.1rem; }
+.cards p { margin: .25rem 0 0; color: var(--muted); }
+.toc { background: var(--surface); border: 1px solid var(--border); border-radius: .6rem; padding: .9rem 1.1rem .4rem; margin-bottom: 1.5rem; }
+.toc h2 { font-size: 1rem; margin: 0 0 .4rem; padding: 0; }
+.toc ul { margin-bottom: .5rem; }
+.toc li { margin-bottom: .25rem; }
+dl.facts { display: grid; grid-template-columns: max-content 1fr; gap: .35rem 1rem; }
+dl.facts dt { font-weight: 600; }
+dl.facts dd { margin: 0; overflow-wrap: anywhere; }
+@media (max-width: 30rem) { dl.facts { grid-template-columns: 1fr; } dl.facts dd { margin-bottom: .5rem; } }
+footer.site { border-top: 1px solid var(--border); color: var(--muted); font-size: .95rem; }
+footer.site .wrap { padding-top: 1.25rem; padding-bottom: 2rem; }
+footer.site p { margin: 0; }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="../">ShiftPay</a>
+    <nav aria-label="Site">
+      <ul>
+        <li><a href="../">Home</a></li>
+        <li><a href="../support/">Support</a></li>
+        <li><a href="./" aria-current="page">Privacy</a></li>
+        <li><a href="../pay-calculations/">How pay is calculated</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+<main id="main" class="wrap">
+  <h1>ShiftPay privacy policy</h1>
+  <p class="meta">Effective date: October 6, 2026</p>
+
+  <h2 id="your-work-information">Your work information</h2>
+  <p>ShiftPay helps you organize shifts and estimate earnings. The information you enter can include job and employer names, pay rates, scheduled and actual hours, breaks, work locations, notes, pay rules, and paycheck amounts. Core features process and store this information on your device.</p>
+  <p>You do not need a ShiftPay account. ShiftPay does not run an advertising network, behavioral analytics service, remote AI service, or proprietary server. We do not sell your work information or use it for advertising. The app does not access your contacts, microphone, camera, bank accounts, or precise device location. An optional work-location field contains text you enter; it does not enable location tracking.</p>
+
+  <h2 id="icloud">Optional iCloud synchronization</h2>
+  <p>If you enable iCloud synchronization, supported app records are synchronized through Apple’s CloudKit service in your Apple Account’s private database. Availability depends on your Apple Account, iCloud settings, storage, network, and the app’s production iCloud configuration. The app continues to work locally when synchronization is unavailable. Turning sync off does not by itself delete data already stored in iCloud.</p>
+  <p>Apple operates iCloud under its own privacy terms. ShiftPay does not promise end-to-end encryption for every CloudKit field. Never use this app to record patient information, customer payment-card details, or other information unrelated to your personal shifts and pay.</p>
+
+  <h2 id="purchases">Purchases</h2>
+  <p>Apple processes in-app purchases. ShiftPay uses StoreKit to verify whether the one-time Pro unlock belongs to your Apple Account. ShiftPay does not receive your payment-card or banking details. Purchase entitlements are verified on your device using Apple’s transaction information. Restoring purchases communicates with the App Store when you request it.</p>
+
+  <h2 id="calendar-notifications-widgets-shortcuts">Calendar, notifications, widgets, and Shortcuts</h2>
+  <ul>
+    <li>Calendar access is requested only when you choose calendar export. Exported events are stored in a dedicated ShiftPay calendar in a writable calendar account and may synchronize through that account provider. Review the event contents before sharing a calendar with other people.</li>
+    <li>Shift and payday reminders are local notifications. You control permission in iOS Settings. Your notification preview settings determine what appears on a locked screen.</li>
+    <li>Widgets and Shortcuts may display a limited snapshot of your next shift or earnings. Widgets share information only with ShiftPay’s own app extension through an Apple App Group. Choose widget placement carefully on a device other people can see.</li>
+    <li>Device authentication, when offered, is handled by Apple’s LocalAuthentication framework. ShiftPay does not receive biometric templates or the device passcode.</li>
+  </ul>
+
+  <h2 id="exports-and-support">Exports and support</h2>
+  <p>Exports happen only when you choose them. A CSV or report can contain sensitive work and compensation information. You choose its destination through the system share sheet. Copies saved or sent to other apps are governed by those apps and are outside ShiftPay’s control.</p>
+  <p>If you contact support, share only information needed to resolve your issue. Do not send unredacted pay statements, patient information, or unnecessary work locations. Support correspondence you voluntarily provide is used to respond to your request.</p>
+
+  <h2 id="retention-and-deletion">Retention and deletion</h2>
+  <p>Your saved records remain until you delete them or remove the app and its local data. Deletion erases the stored work-data payload. A minimal record identifier, type, deletion marker, and timestamp can remain as a synchronization tombstone so another device does not restore the deleted record. The app’s private temporary export and backup copies use complete file protection. Copies older than 24 hours are removed when you next create an export or backup; deleting all app data also removes these temporary copies. Files you save or share to other destinations and device/iCloud backups are separate copies.</p>
+  <p>To remove your information:</p>
+  <ol>
+    <li>Delete individual records within ShiftPay, or choose Settings → Delete all my data and confirm. Allow enabled iCloud synchronization to reach your other devices.</li>
+    <li>To remove the cloud copy, manage ShiftPay’s data in the Apple Account/iCloud storage controls on your device. Exact iOS wording can vary by version.</li>
+    <li>Delete exported files and calendar events separately in the destination apps.</li>
+    <li>Removing the app does not cancel, refund, or erase your Apple purchase history.</li>
+  </ol>
+  <p>Because no ShiftPay account exists, there is no separate ShiftPay account to close. We cannot access your local database to delete or recover records for you.</p>
+
+  <h2 id="security">Security</h2>
+  <p>The app relies on the iOS sandbox and system data protection, and minimizes shared widget data. Keep your device passcode and operating system up to date. No system can guarantee absolute security. The app does not intentionally write compensation values or personal notes into production logs.</p>
+
+  <h2 id="changes-and-contact">Changes and contact</h2>
+  <p>If the app’s data practices change, this policy will be updated.</p>
+  <dl class="facts">
+    <dt>Effective date</dt>
+    <dd>October 6, 2026</dd>
+    <dt>Publisher</dt>
+    <dd>Delicious Wines Crew LLC</dd>
+    <dt>Privacy/support contact</dt>
+    <dd><a href="mailto:bkam@deliciouswines.org">bkam@deliciouswines.org</a></dd>
+    <dt>Public policy URL</dt>
+    <dd><a href="https://delicioushouse.github.io/shiftpay-site/privacy/">https://delicioushouse.github.io/shiftpay-site/privacy/</a></dd>
+  </dl>
+  <p>This website is hosted on GitHub Pages. GitHub may process technical information such as your IP address to deliver and secure these pages; see the GitHub Privacy Statement (<a href="https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement">https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement</a>). The ShiftPay app opens these pages only when you tap a support or privacy link.</p>
+</main>
+<footer class="site">
+  <div class="wrap">
+    <p>© 2026 Delicious Wines Crew LLC · Contact: <a href="mailto:bkam@deliciouswines.org">bkam@deliciouswines.org</a></p>
+  </div>
+</footer>
+</body>
+</html>
